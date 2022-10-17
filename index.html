@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Projeto-angular</title>
+    <link rel="stylesheet" href="C:\Projeto_angular\node_modules\bootstrap\dist\css\bootstrap.min.css">
+    
+    <script src="C:\Projeto_angular\node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+    <script src="node_modules\angular\angular.min.js"></script>
+    <script src="node_modules\angular-route\angular-route.min.js"></script>
+
+    <script>
+        angular.module("projeto", []);
+        angular.module("projeto").controller("projetoController" , function(){
+            vm = this;
+            vm.projeto = "Cadastro"
+        })
+    </script>
+
+</head>
+<body ng-app="projeto">
+    <div ng-controller="projetoController as vm">
+        <h1>{{vm.projeto}}</h1>
+    
+        <form>
+            <div class="form-group">
+              <label for="Nome">Nome</label>
+              <input type="text" class="form-control" id="Nome" placeholder="Another input">
+            </div>
+            <div class="form-group">
+              <label for="Idade">Idade</label>
+              <input type="text" class="form-control" id="Idade" placeholder="Another input">
+            </div>
+            <div class="form-group">
+                <label for="Sexo">Sexo</label>
+                <input type="text" class="form-control" id="Sexo" placeholder="Another input">
+              </div>
+              <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                Salvar
+               </button>
+          </form>
+    </div>
+</body>
+</html>
