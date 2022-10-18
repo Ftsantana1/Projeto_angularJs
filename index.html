@@ -7,41 +7,64 @@
     
     <title>Projeto-angular</title>
     <link rel="stylesheet" href="C:\Projeto_angular\node_modules\bootstrap\dist\css\bootstrap.min.css">
-    
+    <script src="program-service.js"></script>
     <script src="C:\Projeto_angular\node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
     <script src="node_modules\angular\angular.min.js"></script>
     <script src="node_modules\angular-route\angular-route.min.js"></script>
-
     <script>
-        angular.module("projeto", []);
-        angular.module("projeto").controller("projetoController" , function(){
-            vm = this;
-            vm.projeto = "Cadastro"
+        angular.module('projeto').controller("CadastroController", CadastroController);
+          CadastroController.$inject = ['$location', 'ProgramService'];
+              function CadastroController($location, programService){
+                 vm = this 
+                 vm.texto = "cadastro"
+                 vm.pessoa = {}
+                 vm.cadastar = function(){
+                   programService.exec_GET(vm.pessoa).then(function(resposta){
+                    if(resposta){
+                        vm.cliente = resposta
+            } 
         })
+    }
+}
+         angular.module("program").factory("ProgramService", programService);
+           programService.$inject = ["$http"]
+              function programService($http){
+                 var service = {
+                   exec_GET: function(){
+                    return $http.get("http://127.0.0.1:8080").then(TratarResposta,TratarErro);
+   },
+                   exec_POST: function(cliente){
+                    return $http.post("http://127.0.0.1:8080", cliente).then(TratarResposta,TratarErro);
+            }
+        }
+        function TratarResposta(response){
+           return response.data; 
+        }
+        function TratarErro(error){
+            return error.data; 
+         }
+    return service;
+    }
     </script>
-
-</head>
-<body ng-app="projeto">
-    <div ng-controller="projetoController as vm">
-        <h1>{{vm.projeto}}</h1>
-    
+    <div class="Container">
+        <h1 class="display-1">Formulario</h1>
         <form>
             <div class="form-group">
-              <label for="Nome">Nome</label>
-              <input type="text" class="form-control" id="Nome" placeholder="Another input">
+              <label for="Nome">Nome: </label>
+              <input type="text" class="form-control" id="Nome" ng-model="vm.pessoa.nome"  placeholder="Insira seu Nome">
             </div>
             <div class="form-group">
-              <label for="Idade">Idade</label>
-              <input type="text" class="form-control" id="Idade" placeholder="Another input">
-            </div>
+              <label for="Idade">Idade: </label>
+              <input type="number" class="form-control" id="idade" ng-model="vm.pessoa.idade" placeholder="Insira sua Idade">
+            </div>  
             <div class="form-group">
-                <label for="Sexo">Sexo</label>
-                <input type="text" class="form-control" id="Sexo" placeholder="Another input">
-              </div>
-              <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                Salvar
-               </button>
+                <label for="Sexo">Sexo: </label>
+                <input type="text" class="form-control" id="Sexo" ng-model="vm.pessoa.sexo" placeholder="Insira seu Sexo">
+              </div>  
+            <button type="submit" class="btn btn-primary" ng-click="vm.cadastrar()">Cadastrar</button>
+            
           </form>
+          
     </div>
-</body>
-</html>
+    
+   
